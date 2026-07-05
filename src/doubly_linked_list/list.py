@@ -53,6 +53,30 @@ class DoublyLinkedList:
 
         return new_node
 
+    def delete(self, value):
+
+        delete_node = self.find(value)
+
+        if delete_node is None:
+            raise ValueError(f"Delete value '{value}' not found.")
+        
+        if self.size == 1:
+            self.head = None
+            self.tail = None
+            self.size = 0
+            return
+
+        if self.head == delete_node:
+            delete_node.next.prev = None
+            self.head = delete_node.next
+        elif self.tail == delete_node:
+            delete_node.prev.next = None
+            self.tail = delete_node.prev
+        else:
+            delete_node.prev.next = delete_node.next
+            delete_node.next.prev = delete_node.prev
+
+        self.size -= 1
 
     def find(self, value):
         current = self.head

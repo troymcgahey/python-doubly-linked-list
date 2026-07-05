@@ -2,17 +2,17 @@ from src.doubly_linked_list.list import DoublyLinkedList
 
 letters = DoublyLinkedList()
 
-letters.append("A")
-letters.append("C")
+print("Pre Delete")
+
+for value in letters.forward_traversal():
+    print(f"Value: {value}")
 
 try:
-    letters.insert_after("D", "B")
+    letters.delete("A")
 except ValueError as e:
     print(e)
 
-print("\nForward Traversal")
-print(letters.forward_traversal())
-print("Pretty Printing")
+print("Post Delete")
 
 for value in letters.forward_traversal():
     print(f"Value: {value}")
