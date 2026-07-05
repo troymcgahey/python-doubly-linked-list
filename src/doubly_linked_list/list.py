@@ -33,21 +33,48 @@ class DoublyLinkedList:
         self.size += 1
 
     def insert_after(self, target_value, new_value):
+        target_node = self.find(target_value)
+
+        if target_node is None:
+            raise ValueError(f"Target value '{target_value}' not found.")
+
+        new_node = Node(new_value)
+
+        new_node.prev = target_node
+        new_node.next = target_node.next
+
+        if target_node.next is not None:
+            target_node.next.prev = new_node
+        else:
+            self.tail = new_node
+
+        target_node.next = new_node
+        self.size += 1
+
+        return new_node
 
 
-    def contains(self, value):
-        value_found = False
-
+    def find(self, value):
         current = self.head
 
         while current is not None:
             if current.value == value:
-                value_found = True
-                break
+                return current
+
+            current = current.next
+
+        return None
+
+    def contains(self, value):
+        current = self.head
+
+        while current is not None:
+            if current.value == value:
+                return True
             
             current = current.next
 
-        return value_found
+        return False
 
     def forward_traversal(self):
         values = []
