@@ -32,6 +32,25 @@ class DoublyLinkedList:
 
         self.size += 1
 
+    def insert_before(self, target_value, new_value):
+        target_node = self.find(target_value)
+
+        if target_node is None:
+            raise ValueError(f"Target value '{target_value}' not found.")
+        
+        new_node = Node(new_value)
+
+        new_node.next = target_node
+        new_node.prev = target_node.prev
+
+        if self.head == target_node:
+            self.head = new_node
+        else: 
+            target_node.prev.next = new_node
+
+        target_node.prev = new_node
+        self.size += 1
+
     def insert_after(self, target_value, new_value):
         target_node = self.find(target_value)
 
