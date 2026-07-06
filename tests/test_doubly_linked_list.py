@@ -2,6 +2,15 @@ import pytest
 
 from doubly_linked_list.list import DoublyLinkedList
 
+def test_len_dunder_method():
+    letters = DoublyLinkedList()
+
+    letters.append("A")
+    letters.append("B")
+    letters.append("C")
+
+    assert len(letters) == 3
+
 def test_append_and_forward_traversal():
     letters = DoublyLinkedList()
 
