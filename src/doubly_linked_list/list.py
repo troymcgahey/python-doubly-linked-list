@@ -17,6 +17,9 @@ class DoublyLinkedList:
             
             current = current.next
 
+    def __repr__(self):
+        return f"{self.__class__.__name__}({list(self)})"
+
     def append(self, value):
         new_node = Node(value)
 

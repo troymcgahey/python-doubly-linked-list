@@ -6,5 +6,7 @@ letters.append("A")
 letters.append("B")
 letters.append("C")
 
+print(letters)
+
 for letter in letters:
     print(letter)
