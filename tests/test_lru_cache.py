@@ -29,3 +29,34 @@ def test_add_front_adds_node_before_existing_head():
     assert cache.tail is a
     assert b.next is a
     assert a.prev is b
+
+def test_get_returns_none_for_missing_key():
+    cache = LRUCache(2)
+
+    assert cache.get("A") is None
+
+def test_get_moves_node_to_front():
+    cache = LRUCache(3)
+
+    a = LRUNode("A", 100)
+    b = LRUNode("B", 200)
+    c = LRUNode("C", 300)
+
+    cache.cache["A"] = a
+    cache.cache["B"] = b
+    cache.cache["C"] = c
+
+    cache._add_to_front(a)
+    cache._add_to_front(b)
+    cache._add_to_front(c)
+
+    # Curret Order
+    # C -> B -> A
+
+    assert cache.get("A") == 100
+
+    # New Order
+    # A -> C-> B
+
+    assert cache.head is a
+    assert cache.tail is b
