@@ -8,7 +8,7 @@ class LRUNode:
 class LRUCache:
     def __init__(self, capacity):
         if capacity <= 0:
-            raise ValueError("Capacity must be greater than.")
+            raise ValueError("Capacity must be greater than zero.")
 
         self.capacity = capacity
         self.cache = {}
@@ -55,3 +55,15 @@ class LRUCache:
         self._remove_node(old_tail)
 
         return old_tail
+
+    def get(self, key):
+        if key not in self.cache:
+            return None
+
+        node = self.cache[key]
+        self._move_to_front(node)
+
+        return node.value
+
+
+
