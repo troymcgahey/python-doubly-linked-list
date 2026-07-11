@@ -44,7 +44,7 @@ class LRUCache:
         if node is self.head:
             return
 
-        self._remove(self)
+        self._remove_node(node)
         self._add_to_front(node)
 
     def _remove_tail(self):
@@ -64,6 +64,26 @@ class LRUCache:
         self._move_to_front(node)
 
         return node.value
+
+    def put(self, key, value):
+        if key in self.cache:
+            node = self.cache[key]
+            node.value = value
+            self.cache[key] = value
+            self._move_to_front(self, key)
+            return
+
+        new_node = LRUNode(key, value)
+
+        self.cache[key] = value
+        self._add_to_front(key,value)
+
+        if len(self.cache) > self.capacity:
+            removed_node = self._remove_tail()    
+            del self.cache[removed_node.key]
+
+    
+            
 
 
 
