@@ -121,3 +121,12 @@ def test_get_changes_which_key_is_evicted():
     assert cache.get("C") == 300
     assert cache.head.key == "C"
     assert cache.tail.key == "A"
+
+def test_len_dunder_method():
+    cache = LRUCache(5)
+
+    cache.put("A", 100)
+    cache.put("B", 200)
+    cache.put("C", 300)
+
+    assert len(cache) == 3

@@ -14,6 +14,9 @@ class LRUCache:
         self.cache = {}
         self.head = None
         self.tail = None
+
+    def __len__(self):
+        return len(self.cache)
     
     def _add_to_front(self, node):
         node.prev = None
