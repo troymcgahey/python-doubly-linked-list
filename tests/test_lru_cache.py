@@ -60,3 +60,64 @@ def test_get_moves_node_to_front():
 
     assert cache.head is a
     assert cache.tail is b
+
+def test_put_adds_new_key():
+    cache = LRUCache(2)
+
+    cache.put("A", 100)
+
+    assert cache.get("A") == 100
+    assert cache.head.key == "A"
+    assert cache.tail.key == "A"
+    assert len(cache.cache) == 1
+
+def test_put_updates_existing_key_and_moves_it_to_front():
+    cache = LRUCache(3)
+
+    cache.put("A", 100)
+    cache.put("B", 200)
+    cache.put("C", 300)
+
+    #Current order C -> B -> A
+    cache.put("A", 999)
+
+    assert cache.get("A") == 999
+    assert cache.head.key == "A"
+    assert len(cache.cache) == 3
+
+def test_put_evicts_least_recently_used():
+    cache = LRUCache(2)
+
+    cache.put("A", 100)
+    cache.put("B", 200)
+
+    #Current order B -> A
+
+    cache.put("C", 300)
+
+    #A should be evicted because it is the least recently used.
+    assert cache.get("A") == None
+    assert cache.get("B") == 200
+    assert cache.get("C") == 300
+    assert cache.head.key == "C"
+    assert cache.tail.key == "B"
+    assert len(cache.cache) == 2
+
+def test_get_changes_which_key_is_evicted():
+    cache = LRUCache(2)
+
+    cache.put("A", 100)
+    cache.put("B", 200)
+
+    #Current order B -> A
+    cache.get("A")
+
+    #New order A -> B
+    cache.put("C", 300)
+
+    #B should now be evicted
+    assert cache.get("B") == None
+    assert cache.get("A") == 100
+    assert cache.get("C") == 300
+    assert cache.head.key == "C"
+    assert cache.tail.key == "A"
