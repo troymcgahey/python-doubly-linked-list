@@ -17,6 +17,9 @@ class LRUCache:
 
     def __len__(self):
         return len(self.cache)
+
+    def __contains__(self, key):
+        return key in self.cache
     
     def _add_to_front(self, node):
         node.prev = None

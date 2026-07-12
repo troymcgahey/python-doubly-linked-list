@@ -130,3 +130,11 @@ def test_len_dunder_method():
     cache.put("C", 300)
 
     assert len(cache) == 3
+
+def test_contains_dunder_method():
+    cache = LRUCache(3)
+
+    cache.put("A", 100)
+    cache.put("B", 100)
+
+    assert ("A" in cache) == True 
