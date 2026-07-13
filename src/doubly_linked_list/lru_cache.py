@@ -20,6 +20,35 @@ class LRUCache:
 
     def __contains__(self, key):
         return key in self.cache
+
+    def __iter__(self):
+        current = self.head
+
+        while current:
+            yield current.key, current.value
+
+            current = current.next
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('capacity='{self.capacity}', items='{list(self)})"
+        
+    def clear(self):
+        self.cache.clear()
+        self.head = None
+        self.tail = None
+
+    def peek(self, key):
+
+        if key not in self.cache:
+            return None
+
+        return self.cache[key]
+
+    def remove(self, key):
+
+        if key not in self.cache:
+            return None
+            
     
     def _add_to_front(self, node):
         node.prev = None
