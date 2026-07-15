@@ -1,12 +1,15 @@
-from src.doubly_linked_list.list import DoublyLinkedList
+from src.doubly_linked_list.lru_cache import LRUCache
 
-letters = DoublyLinkedList()
 
-letters.append("A")
-letters.append("B")
-letters.append("C")
+cache = LRUCache(2)
 
-print(letters)
+cache.put("A", 100)
+cache.put("B", 200)
 
-for letter in letters:
-    print(letter)
+print("Peek; ", cache.peek("B"))
+
+print(cache)
+
+for key, value in cache:
+    print(f"Key: {key} Value: {value}")
+

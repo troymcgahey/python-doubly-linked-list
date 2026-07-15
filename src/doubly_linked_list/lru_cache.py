@@ -30,7 +30,7 @@ class LRUCache:
             current = current.next
 
     def __repr__(self):
-        return f"{self.__class__.__name__}('capacity='{self.capacity}', items='{list(self)})"
+        return f"{self.__class__.__name__}(capacity={self.capacity}, items={list(self)})"
         
     def clear(self):
         self.cache.clear()
@@ -38,11 +38,12 @@ class LRUCache:
         self.tail = None
 
     def peek(self, key):
+        node = self.cache.get(key)
 
-        if key not in self.cache:
+        if node is None:
             return None
 
-        return self.cache[key]
+        return node.value
 
     def remove(self, key):
 

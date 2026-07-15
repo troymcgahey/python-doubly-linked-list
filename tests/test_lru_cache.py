@@ -122,19 +122,58 @@ def test_get_changes_which_key_is_evicted():
     assert cache.head.key == "C"
     assert cache.tail.key == "A"
 
-def test_len_dunder_method():
-    cache = LRUCache(5)
+def test_len_returns_cache_size():
+    cache = LRUCache(2)
+
+    cache.put("A", 100)
+    cache.put("B", 200)
+
+    assert len(cache) == 2
+
+def test_contains_checks_for_keys():
+    cache = LRUCache(2)
+    cache.put("A", 100)
+
+    assert "A" in cache
+    assert "B" not in cache
+
+def test_iteration_returns_most_recent_first():
+    cache = LRUCache(3)
 
     cache.put("A", 100)
     cache.put("B", 200)
     cache.put("C", 300)
 
-    assert len(cache) == 3
+    assert list(cache) == [
+        ("C", 300),
+        ("B", 200),
+        ("A", 100),
+    ]
 
-def test_contains_dunder_method():
-    cache = LRUCache(3)
+def test_peek_does_not_change_recenct():
+    cache = LRUCache(2)
 
     cache.put("A", 100)
-    cache.put("B", 100)
+    cache.put("B", 200)
 
-    assert ("A" in cache) == True 
+    #Order: B -> A
+    assert cache.peek("A") == 100
+
+    #A should still be least recently used.
+    cache.put("C", 300)
+
+    assert "A" not in cache
+    assert "B" in cache
+    assert "C" in cache
+
+def test_clear_empties_cache():
+    cache = LRUCache(2)
+
+    cache.put("A", 100)
+    cache.put("B", 200)
+    cache.clear()
+
+    assert len(cache) == 0
+    assert cache.head is None
+    assert cache.tail is None
+    assert list(cache) == []
