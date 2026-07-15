@@ -1,3 +1,5 @@
+from doubly_linked_list.decorators import log_call
+
 class LRUNode:
     def __init__(self, key, value):
         self.key = key
@@ -102,6 +104,7 @@ class LRUCache:
 
         return node.value
 
+    @log_call
     def put(self, key, value):
         if key in self.cache:
             node = self.cache[key]
