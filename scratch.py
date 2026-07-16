@@ -1,7 +1,7 @@
-from src.doubly_linked_list.lru_cache import LRUCache
+from src.doubly_linked_list.decorators import repeat
 
+@repeat(3)
+def greet():
+    print("Hello")
 
-cache = LRUCache(2)
-
-cache.put("A", 100)
-cache.put("B", 200)
+greet()
