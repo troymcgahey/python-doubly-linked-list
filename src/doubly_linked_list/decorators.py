@@ -21,15 +21,15 @@ def repeat(times):
         
     return decorator
 
-def retry(max_attemps):
+def retry(max_attempts):
     def decorator(func):
-    @wraps(func)
-    def wrapper(*args, **kwards):
-        for attempt in range(max_attempts):
-            try:
-                return func(*args, **kwargs)
-            except ConnectionError:
-                if attempt == max_attempts - 1:
-                    raise
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            for attempt in range(max_attempts):
+                try:
+                    return func(*args, **kwargs)
+                except ConnectionError:
+                    if attempt == max_attempts - 1:
+                        raise
         return wrapper
     return decorator

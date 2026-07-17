@@ -1,4 +1,7 @@
-from doubly_linked_list.lru_cache import LRUCache, retry
+import pytest 
+
+from doubly_linked_list.lru_cache import LRUCache
+from doubly_linked_list.decorators import retry
 
 def test_log_call_prints_method_name(capsys):
     cache = LRUCache(2)
@@ -16,14 +19,14 @@ def test_retry_succeeds_after_failures():
     @retry(3)
     def download():
         nonlocal attempts
-        attemps += 1
+        attempts += 1
 
         if attempts < 3:
             raise ConnectionError("Temporary Failure")
 
         return "Downloaded"
 
-    result = dpwnload()
+    result = download()
 
     assert result == "Downloaded"
     assert attempts == 3
