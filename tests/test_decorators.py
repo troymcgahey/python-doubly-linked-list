@@ -42,3 +42,17 @@ def test_retry_does_not_retry_after_success():
 
     result = download()
     assert attempts == 1
+
+def test_retry_raises_after_max_attempts():
+    attempts = 0
+
+    @retry(3)
+    def download():
+        nonlocal attempts
+        attempts += 1
+        raise ConnectionError("Service unavailable")
+
+    with pytest.raises(ConnectionError, match="Service unavailable"):
+        download()
+
+    assert attempts == 3
