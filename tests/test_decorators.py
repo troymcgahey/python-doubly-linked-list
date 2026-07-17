@@ -30,3 +30,15 @@ def test_retry_succeeds_after_failures():
 
     assert result == "Downloaded"
     assert attempts == 3
+
+def test_retry_does_not_retry_after_success():
+    attempts = 0
+
+    @retry(3)
+    def download():
+        nonlocal attempts
+        attempts += 1
+        return "Downloaded"
+
+    result = download()
+    assert attempts == 1
