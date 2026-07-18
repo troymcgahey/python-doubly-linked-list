@@ -56,3 +56,22 @@ def test_retry_raises_after_max_attempts():
         download()
 
     assert attempts == 3
+
+def test_retry_handles_configured_exception():
+    attempts = 0
+
+    @retry(
+        max_attempts=3,
+        exceptions=(TimeoutError,),
+    )
+    def call_service():
+        nonlocal attempts
+        attempts += 1
+
+        if attempts < 2:
+            raise TimeoutError("Timed out")
+
+        return "success"
+
+    assert call_service() == "success"
+    assert attempts == 2
