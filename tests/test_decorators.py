@@ -75,3 +75,20 @@ def test_retry_handles_configured_exception():
 
     assert call_service() == "success"
     assert attempts == 2
+
+def test_retry_does_not_handle_unconfigured_exception():
+    attempts = 0
+
+    @retry(
+        max_attempts=3,
+        exceptions=(ConnectionError,),
+    )
+    def call_service():
+        nonlocal attempts
+        attempts += 1
+        raise ValueError("Bad input")
+
+    with pytest.raises(ValueError, match="Bad input"):
+        call_service()
+
+    assert attempts == 1
